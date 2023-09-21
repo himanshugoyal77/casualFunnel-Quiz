@@ -57,7 +57,7 @@ const CountdownTimer = ({ questions }) => {
     clearTimer(getDeadTime());
   };
 
-  if (timer === "00:00") {
+  if (timer === "00:01") {
     navigate("/result", { replace: true, state: questions });
   }
   return (

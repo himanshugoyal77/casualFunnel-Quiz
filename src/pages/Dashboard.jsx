@@ -52,7 +52,7 @@ const Dashboard = () => {
           <h2>{userInfo.email}</h2>
         </div>
         <div className="stats flex flex-col items-center gap-4 p-5">
-          <Progress type="circle" percent={Math.floor((correct / 15) * 100)} />
+          <Progress type="circle" percent={Math.round((correct / 15) * 100)} />
           <h2>{correct} / 15</h2>
         </div>
       </div>

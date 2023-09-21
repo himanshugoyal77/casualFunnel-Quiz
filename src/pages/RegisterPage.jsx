@@ -42,7 +42,7 @@ const Register = () => {
       setOpen(false);
       setConfirmLoading(false);
     }, 2000);
-    navigate("/");
+    navigate("/home");
   };
 
   const handleCancel = () => {

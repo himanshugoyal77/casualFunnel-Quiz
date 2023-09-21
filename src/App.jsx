@@ -7,14 +7,14 @@ import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter([
   {
-    path: "/register",
+    path: "/",
     element: <Register />,
   },
   {
-    path: "/",
+    path: "/home",
     element: <HomePgae />,
   },
-{
+  {
     path: "/result",
     element: <Dashboard />,
   },
