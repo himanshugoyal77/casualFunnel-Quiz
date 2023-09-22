@@ -1,5 +1,6 @@
 import React from "react";
 
+// Indicators component to display the color and text based on the difficulty level
 const Indicators = ({ color, text }) => {
   return (
     <div className="flex gap-2">

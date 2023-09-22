@@ -22,7 +22,7 @@ const router = createBrowserRouter([
 
 function App() {
   const [userInfo, setUserInfo] = useState("");
-  console.log(userInfo);
+  // userContext to manage user state across the app
   return (
     <userContext.Provider
       value={{

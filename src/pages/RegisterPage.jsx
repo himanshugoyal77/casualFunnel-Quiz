@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Lottie from "lottie-react";
 import userAnimation from "../assets/animation_lmrvbep8.json";
 import userContext from "../context/userContext";
@@ -12,9 +12,11 @@ const Register = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const [messageApi, contextHolder] = message.useMessage();
-  const { userInfo, setUserInfo } = useContext(userContext);
+  const { setUserInfo } = useContext(userContext);
+
   const navigate = useNavigate();
 
+  // setting user info in global context
   const handleClick = () => {
     setUserInfo({
       username,
@@ -24,11 +26,12 @@ const Register = () => {
       qIndex: 0,
       optionsHistory: {},
     });
+    // checking if user has entered valid email and username
     if (username == "" || email == "" || !email.includes("@")) {
       messageApi.info("Please enter a valid email and username!");
     } else {
+      // if valid email and username then show CONFIRMATION show modal
       showModal();
-      // navigate("/");
     }
   };
 
@@ -36,6 +39,7 @@ const Register = () => {
     setOpen(true);
   };
 
+  // once user clicks confirm button then navigate to home page
   const handleOk = () => {
     setConfirmLoading(true);
     setTimeout(() => {
@@ -45,23 +49,21 @@ const Register = () => {
     navigate("/home");
   };
 
+  // if user clicks cancel button then close the modal
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setOpen(false);
   };
 
-  
-
-  console.log(userInfo);
   return (
     <div className=" h-screen w-screen flex flex-col md:flex-row items-center justify-center">
       {contextHolder}
+      {/* left animation */}
       <Lottie
         className="h-1/2 md:h-full"
         animationData={userAnimation}
         loop={true}
       />
-
+      {/* right form */}
       <div
         className="md:w-1/3
       flex flex-col items-end justify-center
@@ -69,6 +71,7 @@ const Register = () => {
       >
         <div className="w-full flex flex-col items-start">
           <h1 className="font-bold text-2xl mx-auto">CasualFunnel QUIZ</h1>
+          {/* user name input */}
           <label htmlFor="name" className="mt-4">
             User Name
           </label>
@@ -84,6 +87,7 @@ const Register = () => {
           />
         </div>
         <div className="w-full flex flex-col items-start mt-5">
+          {/* email input */}
           <label htmlFor="name">Email</label>
           <input
             required
@@ -106,6 +110,7 @@ const Register = () => {
           Start
         </button>
       </div>
+      {/* confirmation modal */}
       <Modal
         okText="Confirm"
         title="Welcome to CasualFunnel Quiz"

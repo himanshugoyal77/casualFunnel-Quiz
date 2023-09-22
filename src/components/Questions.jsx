@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import userContext from "../context/userContext";
 import { Modal, Spin, message } from "antd";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Questions = ({ questions }) => {
   const navigate = useNavigate();
@@ -9,16 +9,14 @@ const Questions = ({ questions }) => {
   const { userInfo, setUserInfo } = useContext(userContext);
   const { qIndex, optionsHistory } = userInfo;
   const [selected, setSelected] = useState(optionsHistory[qIndex] || null);
-  console.log(userInfo);
-  console.log("QQQidx", qIndex);
 
+  // shuffling the options
   const shuffleOptions = (option) => {
-    //console.log("shuffle", option);
     return option.sort();
   };
-  console.log("selected", selected);
 
   useEffect(() => {
+    // checking if user has already selected an option for the current question
     if (optionsHistory[qIndex] != null) {
       setSelected(optionsHistory[qIndex]);
     }
@@ -41,20 +39,16 @@ const Questions = ({ questions }) => {
   };
 
   const selectedOption = (option) => {
-    //setIndex(index + 1);
     setSelected(option);
-    console.log("selected", selected);
-    //setChoosenoption({ ...choosenOption, [index]: selected });
     optionsHistory[qIndex] = option;
-    console.log("optionsHistory", optionsHistory);
-    // console.log("optlist", choosenOption);
-    let atteptedNo = 0;
+
+    let atteptedNo = 0; // number of questions attempted
     for (let opt in optionsHistory) {
       if (optionsHistory[opt] != null) {
         atteptedNo++;
       }
     }
-    console.log("atteptedNo", atteptedNo);
+    // if user selects the correct option then increment the correctAns
     if (selected == questions[qIndex]?.correct_answer) {
       setUserInfo({
         ...userInfo,
@@ -71,6 +65,7 @@ const Questions = ({ questions }) => {
   };
 
   const nextQuestion = () => {
+    // if user is on the last question then show the modal
     if (qIndex >= questions.length - 1) {
       message.success("Quiz Completed");
       showModal();
@@ -84,6 +79,7 @@ const Questions = ({ questions }) => {
   };
 
   const prevQuestion = () => {
+    // if user is on the first question then return
     if (qIndex == 0) {
       return;
     }
@@ -93,6 +89,7 @@ const Questions = ({ questions }) => {
     });
   };
 
+  // if questions array is empty then show loading
   if (questions.length === 0)
     return (
       <Spin
@@ -115,16 +112,20 @@ const Questions = ({ questions }) => {
           : questions[qIndex]?.difficulty == "medium"
           ? " bg-yellow-300"
           : " bg-red-300")
+        // change the background color of the question card based on the difficulty level
       }
     >
+      {/* category */}
       <h1 className="font-medium text-xl text-black pb-3">
         Category - {questions[qIndex]?.category}
       </h1>
+      {/* question */}
       <h1 className="font-serif font-bold text-2xl text-gray-800 py-4">
         {qIndex + 1}. {questions[qIndex]?.question}
       </h1>
-
+      {/* options */}
       <div className="grid grid-cols-2 items-center justify-center gap-4 py-4">
+        {/* shuffling options */}
         {shuffleOptions([
           ...questions[qIndex]?.incorrect_answers,
           questions[qIndex]?.correct_answer,
@@ -143,14 +144,23 @@ const Questions = ({ questions }) => {
                   : " bg-white")
               }
             >
-              {i == 0 ? "A" : i == 1 ? "B" : i == 2 ? "C" : i == 3 ? "D" : ""} :{" "}
-              {option}
+              {/* displaying the options */}
+              {i == 0
+                ? "A"
+                : i == 1
+                ? "B"
+                : i == 2
+                ? "C"
+                : i == 3
+                ? "D"
+                : ""} : {option}
             </div>
           );
         })}
       </div>
 
       <div className="flex w-full justify-between items-center mt-3">
+        {/* if user is on the first question then don't show the previous button */}
         {qIndex == 0 ? (
           <div></div>
         ) : (
@@ -175,6 +185,7 @@ const Questions = ({ questions }) => {
             Previous{" "}
           </button>
         )}
+        {/* if user is on the last question then show the submit button */}
         <button
           onClick={nextQuestion}
           className="flex items-center w-28 justify-center h-12 bg-purple-800 text-white gap-2 px-4 rounded-md shadow-lg  transition duration-300 ease-in-out"
@@ -196,6 +207,8 @@ const Questions = ({ questions }) => {
           </svg>
         </button>
       </div>
+
+      {/* sidebar to navigate to any question */}
       <Modal
         okText="Submit"
         title=""

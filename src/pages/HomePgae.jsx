@@ -1,19 +1,17 @@
-import { Button, Drawer } from "antd";
+import { Drawer } from "antd";
 import { useContext, useEffect, useState } from "react";
 import userContext from "../context/userContext";
 import CountdownTimer from "../components/Counter";
 import axios from "axios";
 import Questions from "../components/Questions";
-import bgAnimation from "../assets/animation_lmt99qiw.json";
-import Lottie from "lottie-react";
 import Indicators from "../components/Indicators";
 
 const HomePgae = () => {
   const [open, setOpen] = useState(false);
   const { userInfo, setUserInfo } = useContext(userContext);
+  // questions is the array of all the questions fetched from the api
   const [questions, setQuestions] = useState([]);
-  const [idx, setIdx] = useState(0);
-  const { username } = userInfo;
+  // qIndex is the index of the question that is currently being displayed, same in global state
   const { qIndex, optionsHistory } = userInfo;
 
   const showDrawer = () => {
@@ -24,24 +22,28 @@ const HomePgae = () => {
     setOpen(false);
   };
 
+  // fetching questions from the api
   const getQuestions = async () => {
-    const res = await axios.get("https://opentdb.com/api.php?amount=15");
-    if (res.data.response_code == 0) {
-      setQuestions(res.data.results);
-      console.log(questions);
-    } else {
-      console.log("somrthing went wrong!");
+    try {
+      const res = await axios.get("https://opentdb.com/api.php?amount=15");
+      if (res.data.response_code == 0) {
+        setQuestions(res.data.results);
+      } else {
+        console.log("somrthing went wrong!");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
- // window.location.reload();
+  // calling getQuestions() only once when the component mounts
   useEffect(() => {
     getQuestions();
   }, []);
 
-  console.log("QQQidx1", qIndex);
   return (
     <div className="h-screen w-screen home">
+      {/* nav bar */}
       <nav
         className=" w-[90%] md:w-[80%] mx-auto flex items-center 
       justify-between text-lg font-bold text-blue-700 py-4"
@@ -67,12 +69,15 @@ const HomePgae = () => {
           />
         </svg>
       </nav>
+      {/* indicators */}
       <div className="flex justify-center gap-4 md:gap-12 mt-6">
         <Indicators color="bg-green-100" text="Easy" />
         <Indicators color="bg-yellow-300" text="Medium" />
         <Indicators color="bg-red-500" text="Hard" />
       </div>
-      <Questions questions={questions} idx={idx} />
+      {/* questions component */}
+      <Questions questions={questions} />
+      {/* drawer */}
       <Drawer
         title="Questions Attempted"
         placement="right"
@@ -87,6 +92,7 @@ const HomePgae = () => {
           return (
             <div
               onClick={() => {
+                // setting the qIndex in global state to the index of the question that is clicked
                 setUserInfo({ ...userInfo, qIndex: i });
                 setOpen(false);
               }}

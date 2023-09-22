@@ -1,35 +1,30 @@
-import React, { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import userContext from "../context/userContext";
 import { Progress } from "antd";
-import Questions from "../components/Questions";
 
 const Dashboard = () => {
+  // getting location state from previous page
   const location = useLocation();
   const navigate = useNavigate();
   const { userInfo, setUserInfo } = useContext(userContext);
+  // optionsHistory is the object containing all the options selected by the user
   const { optionsHistory } = userInfo;
-  console.log("location state", location.state);
+
   // array containing correct answers with index
   const correctAns = location.state.map((item) => item.correct_answer);
 
-  console.log("correctAns", correctAns);
-
   // array containing user selected options with index
   const selectedAns = Object.values(optionsHistory);
-  console.log("selectedAns", selectedAns);
 
-  let correct = 0;
+  let correct = 0; //variable to store number of correct answers
   for (let i = 0; i < correctAns.length; i++) {
-    console.log("correctAns[i]", correctAns[i]);
-    console.log("selectedAns[i]", selectedAns[i]);
     if (correctAns[i] == selectedAns[i]) {
       correct++;
     }
   }
 
-  console.log("correct", correct);
-
+  // function to get suggestion based on score
   const getSuggestion = (score) => {
     if (score < 35) {
       return "You need to work hard";
@@ -51,6 +46,7 @@ const Dashboard = () => {
           <h1 className="pb-3">Hi, {userInfo.username}</h1>
           <h2>{userInfo.email}</h2>
         </div>
+        {/* score in percentage */}
         <div className="stats flex flex-col items-center gap-4 p-5">
           <Progress type="circle" percent={Math.round((correct / 15) * 100)} />
           <h2>{correct} / 15</h2>
@@ -62,6 +58,7 @@ const Dashboard = () => {
         </h1>
       </div>
 
+      {/* questions and answers comparing side by side */}
       <div className="w-min md:w-full flex flex-col items-center mt-8 mb-4">
         {correctAns.map((item, i) => {
           return (
@@ -97,6 +94,7 @@ const Dashboard = () => {
           );
         })}
       </div>
+      {/* try again button */}
       <button
         className="mt-5 px-5 py-2 bg-blue-500 text-white rounded-md"
         onClick={() => {

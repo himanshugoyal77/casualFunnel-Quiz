@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import ClockAnimation from "../assets/animation_lmt8wlwk.json";
 import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +32,7 @@ const CountdownTimer = ({ questions }) => {
     }
   };
 
+  // function to clear timer and start again
   const clearTimer = (e) => {
     setTimer("00:00");
 
@@ -42,6 +43,7 @@ const CountdownTimer = ({ questions }) => {
     Ref.current = id;
   };
 
+  // function to get deadline time 30 minutes from now in seconds
   const getDeadTime = () => {
     let deadline = new Date();
     deadline.setSeconds(deadline.getSeconds() + 1800);
@@ -57,9 +59,11 @@ const CountdownTimer = ({ questions }) => {
     clearTimer(getDeadTime());
   };
 
+  // if timer reaches 00:01 then navigate to result page, stop quiz
   if (timer === "00:01") {
     navigate("/result", { replace: true, state: questions });
   }
+  
   return (
     <div
       className="border rounded-md content-center text-black
