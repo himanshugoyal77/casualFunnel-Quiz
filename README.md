@@ -1,5 +1,8 @@
+
+#deployed Website url
 https://casualfunnel-quiz.netlify.app/
 
 
-https://github.com/himanshugoyal77/casuelFunnel-Quiz/assets/92782099/9c3543d0-66bf-434d-81e9-a8836b0e6f72
+#demo video
+https://github.com/himanshugoyal77/casuelFunnel-Quiz/assets/92782099/127e95fd-8fb6-4418-86fd-ba4dee8db20b
 
