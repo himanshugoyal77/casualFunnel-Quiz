@@ -34,9 +34,11 @@ const HomePgae = () => {
     }
   };
 
+ // window.location.reload();
   useEffect(() => {
     getQuestions();
-  }, [username]);
+  }, []);
+
   console.log("QQQidx1", qIndex);
   return (
     <div className="h-screen w-screen home">
@@ -46,7 +48,7 @@ const HomePgae = () => {
       >
         <div className="hidden md:flex items-end text-black md:w-32">
           <span>Questions Attempted - </span>
-          {userInfo.attempted}
+          {userInfo?.attempted}
         </div>
         <CountdownTimer questions={questions} />
         <svg
@@ -84,7 +86,10 @@ const HomePgae = () => {
         {questions.map((question, i) => {
           return (
             <div
-              onClick={() => setUserInfo({ ...userInfo, qIndex: i })}
+              onClick={() => {
+                setUserInfo({ ...userInfo, qIndex: i });
+                setOpen(false);
+              }}
               key={i}
               className={
                 "flex items-center gap-4 mt-2 px-4 py-2 rounded-md text-start text-sm" +

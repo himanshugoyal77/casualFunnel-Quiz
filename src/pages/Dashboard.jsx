@@ -100,7 +100,15 @@ const Dashboard = () => {
       <button
         className="mt-5 px-5 py-2 bg-blue-500 text-white rounded-md"
         onClick={() => {
-          setUserInfo({ ...userInfo, qIndex: 0 }), navigate("/");
+          setUserInfo({
+            ...userInfo,
+            qIndex: 0,
+            correctAns: 0,
+            attempted: 0,
+            optionsHistory: {},
+          }),
+            navigate("/", { replace: true });
+          window.location.reload();
         }}
       >
         Try Again

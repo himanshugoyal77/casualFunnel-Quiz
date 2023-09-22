@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import userAnimation from "../assets/animation_lmrvbep8.json";
 import userContext from "../context/userContext";
@@ -49,6 +49,8 @@ const Register = () => {
     console.log("Clicked cancel button");
     setOpen(false);
   };
+
+  
 
   console.log(userInfo);
   return (

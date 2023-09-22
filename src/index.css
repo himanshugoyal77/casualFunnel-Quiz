@@ -13,12 +13,3 @@ h1 {
   font-family: "Mochiy Pop One", cursive;
 }
 
-.home,
-.result {
-  height: 100vh;
-  width: 100vw;
-  background: url("https://images.squarespace-cdn.com/content/v1/5af526957c932741bf200559/1605757594818-V22N3LKKRFG83AQ4NNRX/bg-shapes-test-flipped.png?format=2500w");
-  background-repeat: no-repeat;
-  object-fit: cover;
-  background-size: cover;
-}

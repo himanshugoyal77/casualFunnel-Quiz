@@ -121,7 +121,7 @@ const Questions = ({ questions }) => {
         Category - {questions[qIndex]?.category}
       </h1>
       <h1 className="font-serif font-bold text-2xl text-gray-800 py-4">
-        {questions[qIndex]?.question}
+        {qIndex + 1}. {questions[qIndex]?.question}
       </h1>
 
       <div className="grid grid-cols-2 items-center justify-center gap-4 py-4">
