@@ -55,7 +55,10 @@ const Register = () => {
   };
 
   return (
-    <div className=" h-screen w-screen flex flex-col md:flex-row items-center justify-center">
+    <div
+      data-testid="register-page"
+      className=" h-screen w-screen flex flex-col md:flex-row items-center justify-center"
+    >
       {contextHolder}
       {/* left animation */}
       <Lottie
